@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title> template </title>
+
+	<!-- preload -->
+	<script src="assets/js/assetData.js"></script>
+	<script src="assets/js/preload.js"></script>
+
+	<!-- libraries -->
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="assets/js/libs/handlebars.js"></script>
+
+	<!-- main -->
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/config.js"></script>
+	<script src="assets/js/utils.js"></script>
+	<script src="assets/js/copy.js"></script>
+
+	<!--views-->
+	<script src="assets/js/views/basic.js"></script>
+	<script src="assets/js/views/layout.js"></script>
+
+	<!-- classes -->
+	<script src="assets/js/classes/workBox.js"></script>
+
+	
+
+	<!-- css -->
+	<link rel="stylesheet" href="assets/css/reset.css"/>
+	<link rel="stylesheet" href="assets/css/main.css"/>
+	
+</head>
+
+<body>
+
+	<div id="container">
+
+		<div id="splash">
+			<div id="title"> CHARLIE CLARK DESIGN </div>
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<div id="work" class="section">
+		</div>
+		
+	</div>
+
+
+	<!-- templates -->
+	<!-- basic template -->
+	<script id="test-template" type="text/x-handlebars-template">
+		<div class="workBox-copy">
+			<h1>{{title}}</h1>
+			<div class="body">
+				{{subtitle}}
+			</div>
+		</div>
+		<div class="workBox-img scaleBoth">
+		</div>
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+#title {
+font-family: "Futura";
+position: absolute;
+color: white;
+text-align: center;
+width: 800px;
+left: 50%;
+margin-left: -400px;
+top: 40%;
+height: 30px;
+border-bottom: 1px white solid;
+letter-spacing: 1.2em;
+}
+
+/*work*/
+
+#work{
+	margin: auto;
+}
+.work-box {
+float: left;
+background-color: red;
+position: relative;
+}
+
+.workBox-img , .workBox-copy {
+position: absolute;
+overflow: hidden;
+}
+
+
+
+/*helpers*/
+
+.scaleBoth{
+	width: 100%;
+	height: 100%;
+}
