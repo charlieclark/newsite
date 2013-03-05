@@ -1,10 +1,14 @@
 var copyData ={
 	workBoxes :
 	{
-		"workBox_0":
+		"project0":
 		{
 			title : "test title",
-			subtitle : "test subtitle"
+			subtitle : "test subtitle",
+			imgCopy:
+			[
+				{ "thumb0" : "bla bla bla bla" }
+			]
 		}
 	}
 }

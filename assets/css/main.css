@@ -1,3 +1,10 @@
+
+body , html {
+}
+
+#content{
+	position: relative;
+}
 #title {
 font-family: "Futura";
 position: absolute;
@@ -21,18 +28,50 @@ letter-spacing: 1.2em;
 float: left;
 background-color: red;
 position: relative;
+overflow: hidden;
 }
 
 .workBox-img , .workBox-copy {
 position: absolute;
 overflow: hidden;
+width: 100%;
+height: 100%;
 }
 
+.workBox-copy{
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+}
 
+/*modal*/
 
-/*helpers*/
-
-.scaleBoth{
+#modal{
+	position: fixed;
 	width: 100%;
 	height: 100%;
+	top: 50%;
+	left: 50%;
+	background-color: rgba( 0 , 0, 0, 0.8);
+	display: none;
+	border-radius: 17px;
+}
+
+#modal-container{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
+.modal-close{
+	width: 20px;
+	height: 20px;
+	background: white;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+/*helpers*/
+
+img{
+	width: 100%;	
 }

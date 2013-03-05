@@ -32,8 +32,10 @@ function layoutClass(){
 			// numBoxes = PRELOAD.getSectionLength("global");
 
 			//init
-			initWork();
+			
 			addEventListeners();
+
+			
 
 
 		}
@@ -49,53 +51,93 @@ function layoutClass(){
 
 			$(PRELOAD).on( PRELOAD.GROUP_LOADED , function(event,data){ 
 				var groupTag = data.groupTag;
+				var elementArray = data.elementArray;
 
-				if( groupTag.indexOf("workBox") >= 0 )
+				if( groupTag.indexOf("thumbnails") >= 0 )
 				{
-					loadWorkBox(data);
+					initWorkBoxes(elementArray);
+
+				}
+
+				if( groupTag.indexOf("project") >= 0 )
+				{
+					loadWorkBoxImages(elementArray , groupTag);
 				}
 			});
 		}
 
 		//loadHandlers
 
-		function loadWorkBox(data)
+		function loadWorkBoxImages(images , groupTag)
 		{
-			var elements = data.elementArray;
-			var workBoxTag = data.groupTag;
-			var boxEl =  $(".work-box").eq(workBoxesLoaded);
 
-			//compiling template copy
-			var boxCopy = copyData.workBoxes[workBoxTag];
-			var html = compileTemplate("test-template" , boxCopy , boxEl);
-
-			//creating box class with functionality
-			var tempBox = new workBoxClass( boxEl , elements , {});
-			
-			boxArray.push(tempBox);
-
+			for( var i = 0 ; i < boxArray.length ; i++)
+			{
+				if(boxArray[i].tag == groupTag)
+				{
+					boxArray[i].imagesLoaded(images);
+				}
+			}
+		
 			workBoxesLoaded++;
 		}
 
 
 		//initing views
 
-		function initWork(){
+		function initWorkBoxes( images ){
+
 			
 			for( var i = 0 ; i <  numBoxes ; i++)
 			{
-				//building box containers
 				var tempBox = $("<div>" , {
 					"class" : "work-box"
 				}).appendTo( $("#work") );
-
-				//initing work class
 				
-
 			}
 
+			for( var i = 0 ; i < images.length ; i++)
+			{
+				
+				var tag = images[i].name;
+				var boxEl =  $(".work-box").eq(i);
+
+				//compiling template copy
+				var boxCopy = copyData.workBoxes[tag];
+				var html = compileTemplate("test-template" , boxCopy , boxEl);
+				//init box class
+				var tempBox = new workBoxClass( tag , boxEl , images[i] , boxCopy , {});
+				boxArray.push(tempBox);
+			}
+
+			workBoxTouchListeners();
 			maxWidth = maxBoxWidth * maxBoxPerRow;
+			resize();
 		}
+
+		function workBoxTouchListeners(){
+			$(".work-box").hover( 
+				function(){
+					$(this).find(".workBox-copy").show();	
+				},
+				function(){
+					$(this).find(".workBox-copy").hide();
+				}
+			).click(function(){
+
+				console.log("hello")
+				var index = $(this).index();
+				var context = {};
+				context.copyContext = boxArray[index].copy;
+				context.imgArray = boxArray[index].imgArray;
+				context.thumb = boxArray[index].thumb;
+
+				MODAL.showModal(context);
+
+			})
+		}
+
+
 
 		function resize(){
 

@@ -14,6 +14,7 @@ function init(){
 	PRELOAD.init(preloadData.allSections , [] );
 
 	//initializing classes
+	MODAL.init();
 	BASIC.init();
 	LAYOUT.init();
 
@@ -55,11 +56,14 @@ function mouseEvents(){
 $(window).resize(function(){
 
 	
-		CONFIG.windowHeight = window.innerHeight;;
+		CONFIG.windowHeight = window.innerHeight;
 		CONFIG.windowWidth 	= window.innerWidth;
 
 		BASIC.resize();
 		LAYOUT.resize();
+		MODAL.resize();
+
+	
 });
 
 

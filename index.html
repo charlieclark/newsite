@@ -7,7 +7,7 @@
 	<script src="assets/js/preload.js"></script>
 
 	<!-- libraries -->
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="assets/js/libs/jquery.js"></script>
 	<script src="assets/js/libs/handlebars.js"></script>
 
 	<!-- main -->
@@ -17,8 +17,10 @@
 	<script src="assets/js/copy.js"></script>
 
 	<!--views-->
+
 	<script src="assets/js/views/basic.js"></script>
 	<script src="assets/js/views/layout.js"></script>
+	<script src="assets/js/views/modal.js"></script>
 
 	<!-- classes -->
 	<script src="assets/js/classes/workBox.js"></script>
@@ -42,11 +44,14 @@
 
 		<div id="work" class="section">
 		</div>
+
+		<div id="modal"></div>
 		
 	</div>
 
 
 	<!-- templates -->
+
 	<!-- basic template -->
 	<script id="test-template" type="text/x-handlebars-template">
 		<div class="workBox-copy">
@@ -55,9 +60,21 @@
 				{{subtitle}}
 			</div>
 		</div>
-		<div class="workBox-img scaleBoth">
+		<div class="workBox-img">
 		</div>
 	</script>
+
+	<script id="modal-template" type="text/x-handlebars-template">
+	<div id="modal-container">
+		<div class="modal-title">{{title}}</div>
+		<div class="modal-subtitle">{{subtitle}}</div>
+		<div class="modal-imageGallery"></div>
+		<div class="modal-close"></div>
+	</div>
+		
+	</script>
+
+
 
 
 
