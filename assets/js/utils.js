@@ -129,7 +129,7 @@ var UTILS = UTILS || {};
         var returnLeft = (boundW - returnWidth ) /2;
         var returnTop = (boundH - returnHeight ) /2;
         
-        return { "h" : returnHeight , "w":returnWidth , "l" : returnLeft , "t" : returnTop }
+        return { "h" : Math.round(returnHeight) , "w": Math.round(returnWidth ), "l" : Math.round(returnLeft) , "t" : Math.round(returnTop) }
 
     }
 

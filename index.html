@@ -41,11 +41,11 @@
 			<div id="title"> CHARLIE CLARK DESIGN </div>
 			<canvas id="canvas"></canvas>
 		</div>
-
+		<div id="modal"></div>
 		<div id="work" class="section">
 		</div>
 
-		<div id="modal"></div>
+		
 		
 	</div>
 
@@ -66,10 +66,12 @@
 
 	<script id="modal-template" type="text/x-handlebars-template">
 	<div id="modal-container">
-		<div class="modal-title">{{title}}</div>
-		<div class="modal-subtitle">{{subtitle}}</div>
-		<div class="modal-imageGallery"></div>
-		<div class="modal-close"></div>
+		<div id="modal-contents">
+			<div class="modal-title">{{title}}</div>
+			<div class="modal-subtitle">{{subtitle}}</div>
+				<div class="modal-imageGallery"></div>
+			<div class="modal-close"></div>
+		</div>
 	</div>
 		
 	</script>

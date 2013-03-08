@@ -31,6 +31,7 @@ function init(){
 
 function animate(){
 	requestAnimFrame(animate);
+	render();
 }
 
 function render(){

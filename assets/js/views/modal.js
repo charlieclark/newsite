@@ -23,7 +23,7 @@ function modalClass(){
 	}
 	self.showModal = function(context){
 
-		el.show();
+		
 		el.empty();
 
 		copyContext = context.copyContext;
@@ -36,14 +36,13 @@ function modalClass(){
 
 		//image gallery
 
-		console.log(imgArray);
+		initGallery(imgArray)
 
-		for( var i = 0 ; i < imgArray.length ; i++)
-		{
-			var div = $("<div>" , {
-				"class" : "imgArray"
-			}).html(imgArray[i]).appendTo(".modal-imageGallery");
-		}
+	
+		el.slideDown();
+
+		
+		
 
 		$(".modal-close").click(function(){
 			self.hideModal();
@@ -55,36 +54,46 @@ function modalClass(){
 	}
 
 	self.hideModal = function(){
-		el.hide();
+		el.slideUp();
 	}
 
 	self.resize = function(){
 		resize();
 	}
 
+	function initGallery(imgArray){
+
+		var galleryWidth = 0;
+
+		for( var i = 0 ; i < imgArray.length ; i++)
+		{
+			var div = $("<div>" , {
+				"class" : "imgArray"
+			}).html(imgArray[i]).appendTo(".modal-imageGallery");
+
+		}	
+
+	}
+
 	function resize(){
+		$("#modal").width( $("#work").width() - parseInt($(".work-box").css("margin")) *2 );
 
-		//resizing modal
-		var modalOffset = 10;
-		var modalWidth = CONFIG.windowWidth - (modalOffset * 2);
-		var modalHeight = CONFIG.windowHeight - (modalOffset * 2);
+			//resizing modal gallery images
 
-		var modalContainerWidth =modalWidth - (modalOffset * 2);
-		var modalContainerHeight = modalHeight - (modalOffset * 2);
+		$(".imgArray").each(function(){
+		 	var img = $(this).find("img")[0]
+			var imgDim = UTILS.resizeWithExcessCalc( img.imgDim.w ,  img.imgDim.h , 0 , $(".modal-imageGallery").width() , $(".modal-imageGallery").height()  )
 
-		$("#modal").css({
-			"width" : modalWidth,
-			"height" : modalHeight,
-			"margin-left" : - modalWidth / 2,
-			"margin-top" : -modalHeight/2
-		});
-
-		$("#modal-container").css({
-			"width" : modalContainerWidth,
-			"height" : modalContainerHeight,
-			"margin-left" : - modalContainerWidth / 2,
-			"margin-top" : -modalContainerHeight/2
-		});
+			console.log(img.imgDim.w)
+			$(this).css({
+				"width" : imgDim.w,
+				"height" : imgDim.h,
+				"top" : imgDim.t,
+				"left": imgDim.l
+			})
+			 console.log(imgDim);
+		})
+		
 	}
 
 }

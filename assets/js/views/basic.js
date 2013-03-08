@@ -38,7 +38,7 @@ function basicClass(){
 	var colorTickerMax = 2000;
 
 	// debugging
-	var debugPause = true;
+	var debugPause = false;
 
 	//public methods
 	this.init = function(){
@@ -81,7 +81,10 @@ function basicClass(){
 
 	self.startAnimating = function(){
 		if(!isAnimating)
+		{
 			isAnimating = true;
+		}
+			
 
 	}
 
@@ -94,8 +97,10 @@ function basicClass(){
 	self.animate = function(){
 		if(isAnimating)
 		{
+			
 			calculate();
 			render();
+
 		}
 	}
 
