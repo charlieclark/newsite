@@ -26,10 +26,10 @@ var imageGroups = {
 	{
 		"array" :
 		[
-			{ name: "slide0", url : "psa1.jpg" },
-			{ name: "slide1", url : "psa2.jpg" },
-			{ name: "slide2", url : "psa3.jpg" },
-			{ name: "slide3", url : "psa4.jpg" }
+			{ name: "slide0", url : "photo00.jpg" },
+			{ name: "slide1", url : "photo01.jpg" },
+			{ name: "slide2", url : "photo02.jpg" },
+			{ name: "slide3", url : "photo03.jpg" }
 		]
 	}
 	

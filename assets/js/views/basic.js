@@ -35,18 +35,23 @@ function basicClass(){
 	var color2Dest = createColor();
 
 	//color ticker
-	var colorTickerMax = 2000;
+	var colorTickerMax = 10000;
 
 	// debugging
-	var debugPause = false;
+	var debugPause = true;
+
+	//dom refs
+	var titleRef = null;
 
 	//public methods
 	this.init = function(){
 
+		titleRef = $("#title");
+
 		changeColor(0);
 		changeColor(1);
 		
-		$("#title").css({
+		titleRef.css({
 			"color" : hex2,
 			"border-color" : hex2
 		})
@@ -55,20 +60,17 @@ function basicClass(){
 		init();
 
 
-		$("#splash").mousemove(function(e){
-			mouseX = e.pageX;
-			mouseY = e.pageY;
-		});
+
 
 		$("#splash").mousedown(function(){
-			offsetMax = 10;
+			offsetMax = 100;
 		});
 
 		$("#splash").mouseup(function(){
 			offsetMax = 0;
 		});
 
-		generateGrid();
+		// generateGrid();
 
 		if(!debugPause)
 			self.startAnimating();
@@ -112,8 +114,8 @@ function basicClass(){
 
 	function calculate(){
 
-		var perX = mouseX / wWidth;
-		var perY = mouseY / wHeight;
+		var perX = CONFIG.mouseX / wWidth;
+		var perY = CONFIG.mouseY / wHeight;
 
 		squareX = Math.floor( perX * numColumns );
 		squareY = Math.floor( perY * numRows);
@@ -130,17 +132,6 @@ function basicClass(){
 		// initColors
 		color1Obj = getColor(hex1);
 		color2Obj = getColor(hex2);
-
-		// color1Obj = createColor(0,100,100);
-		// color2Obj = createColor(200,200,200);
-
-
-		
-
-	
-
-
-
 		
 	}
 	
@@ -185,9 +176,6 @@ function basicClass(){
 
 
 		(roll1 == 0) ? color1Dest = newColor : color2Dest = newColor;
-
-		// console.log(color1Dest, color2Dest);
-
 	
 
 		function randomColor()
@@ -215,27 +203,23 @@ function basicClass(){
 
 	function generateGrid(){
 
-			$("#title").css({
-			"color" :  "rgb(" + color2Obj.r +"," + color2Obj.g + "," + color2Obj.b + ")" ,
-			"border-color" : "rgb(" + color2Obj.r +"," + color2Obj.g + "," + color2Obj.b + ")" 
-		})
+
+		var titleColor = "rgb(" + color2Obj.r +"," + color2Obj.g + "," + color2Obj.b + ")"
+		titleRef[0].style["color"] = titleColor ;
+		titleRef[0].style["border-color"] = titleColor
 
 		var c = canvasRef; 
-		var ctx = ctxRef ;
-
-		ctx.canvas.height = CONFIG.windowHeight;
-		ctx.canvas.width = CONFIG.windowWidth;
+		var ctx = ctxRef;
 
 		//clearing canvas
 		ctx.clearRect(0 , 0 , ctx.width , ctx.height );
 
-		numColumns = Math.ceil( wWidth / squareSize);
-		numRows = Math.ceil( wHeight / squareSize);
+		
 
 		var maxDist = dist(numColumns , numRows);
 		var newDist = maxDist /2 ;
-		var mDistX = Math.abs( mouseX - wWidth/2);
-		var mDistY = Math.abs( mouseY - wHeight/2);
+		var mDistX = Math.abs( CONFIG.mouseX - wWidth/2);
+		var mDistY = Math.abs( CONFIG.mouseY - wHeight/2);
 		var offsetRatio = Math.max( 0.1 , (dist(mDistX , mDistY) / (maxDist/2)) / 10);
 
 		var color1New = getNewColor( (color1Obj) , (color1Dest)  );
@@ -267,13 +251,10 @@ function basicClass(){
 							// console.log(color1Obj , color1Dest)
 						}
 
-
-						
-
 						var tempColor =  getNewColor( (color1New) , (color2New) , a  , i);
 
 						
-						ctx.fillStyle = "rgba(" + tempColor.r + "," + tempColor.g + "," + tempColor.b +","+ 1 +")";
+						ctx.fillStyle = "rgb(" + tempColor.r + "," + tempColor.g + "," + tempColor.b + ")";
 	    				ctx.fillRect( l , t,squareSize,squareSize);
 					}
 			}
@@ -290,20 +271,6 @@ function basicClass(){
 			return curDist/newDist;
 		}
 
-		function letterArea(x , y)
-		{
-			var isLetter = false;
-			for( var i = 0 ; i < letterArray.length ; i++)
-			{
-				if( x == letterArray[i][0] && y == letterArray[i][1])
-				{
-					isLetter = true;
-					break;
-				}
-			}
-			return isLetter;
-		}
-
 		function dist(x , y)
 		{
 			return  Math.sqrt((x * x) + (y * y))
@@ -313,25 +280,13 @@ function basicClass(){
 		
 	}
 
-	function getNewColor( c1 , c2 , m , i)
+	function getNewColor( c1 , c2 , m )
 		{
-			// console.log(c1 , c2 , m)
 
-			if(i)
-			{
-				// console.log(c1.r);
-			}
 
 			function getValue(v1 , v2 , mx)
 			{
-				// console.log(mx)
 
-				
-					
-
-
-
-				// console.log(v1 , v2 , mx)
 				var dir;
 
 				(v1 >= v2)? dir = 1 : dir = -1;
@@ -355,36 +310,6 @@ function basicClass(){
 
 		}
 
-		function getColorInc(c1 , c2){
-
-
-			function getValue(v1 , v2)
-			{
-				// console.log(mx)
-
-				var mx = 0.01;
-
-					
-
-
-
-				// console.log(v1 , v2 , mx)
-				var dir;
-
-				(v1 >= v2)? dir = 1 : dir = -1;
-
-				return Math.floor( v1 + mx * -dir * Math.abs(v1 - v2) );
-			}
-
-			var r = getValue(c1.r , c2.r , m);
-			var g = getValue(c1.g , c2.g , m);
-			var b = getValue(c1.b , c2.b , m);
-
-			
-
-			return { "r" : r , "g" : g , "b" : b}
-		}
-
 	function resize(){
 
 
@@ -392,10 +317,17 @@ function basicClass(){
 		wWidth = CONFIG.windowWidth;
 		wHeight = CONFIG.windowHeight;
 
-		$("#splash").css({
-			"width" : wWidth,
-			"height" : wHeight
-		})
+		numColumns = Math.ceil( wWidth / squareSize);
+		numRows = Math.ceil( wHeight / squareSize);
+
+
+		ctxRef.canvas.height = CONFIG.windowHeight;
+		ctxRef.canvas.width = CONFIG.windowWidth;
+
+		// $("#splash").css({
+		// 	"width" : wWidth,
+		// 	"height" : wHeight
+		// })
 
 		
 

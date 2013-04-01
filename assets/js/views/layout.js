@@ -125,7 +125,6 @@ function layoutClass(){
 				}
 			).click(function(){
 
-				console.log("hello")
 				var index = $(this).index();
 				var context = {};
 				context.copyContext = boxArray[index].copy;
@@ -143,7 +142,7 @@ function layoutClass(){
 
 			//general resize
 
-			curWidth = CONFIG.windowWidth;
+			curWidth = CONFIG.windowWidth * 0.9;
 
 			if( curWidth > maxWidth)
 			{

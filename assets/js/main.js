@@ -56,13 +56,15 @@ function mouseEvents(){
 
 $(window).resize(function(){
 
+		console.log("result");
 	
-		CONFIG.windowHeight = window.innerHeight;
-		CONFIG.windowWidth 	= window.innerWidth;
+		CONFIG.windowHeight = $(window).height();
+		CONFIG.windowWidth 	=$(window).width();
 
 		BASIC.resize();
 		LAYOUT.resize();
 		MODAL.resize();
+		GALLERY.resize();
 
 	
 });

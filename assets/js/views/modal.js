@@ -8,8 +8,11 @@ function modalClass(){
 	var thumb = null;
 	var imageCopyArray = null;
 	var el = null;
+	
 
 	self.init = function(_el){
+
+
 
 		if(_el)
 		{
@@ -23,57 +26,48 @@ function modalClass(){
 	}
 	self.showModal = function(context){
 
-		
+		//clearing previous
 		el.empty();
 
+		//getting context/information
 		copyContext = context.copyContext;
 		imgArray = context.imgArray;
 		thumb = context.thumb;
-
 		imageCopyArray = copyContext.imgCopy;
-
 		compileTemplate( "modal-template" , copyContext , el);
-
-		//image gallery
-
-		initGallery(imgArray)
-
 	
-		el.slideDown();
+		//showing div
+		resize();
+		el.slideDown("slow" , function(){
+			GALLERY.init(imgArray);
+		});
 
-		
-		
-
+		//close modal
 		$(".modal-close").click(function(){
 			self.hideModal();
 		});
 
-		resize();
-	
-
+		
 	}
 
 	self.hideModal = function(){
-		el.slideUp();
+
+		//fading stuff out, then closing
+
+		$(".modal-imageGallery").fadeOut("slow" , function(){
+			el.slideUp();
+		})
 	}
 
 	self.resize = function(){
 		resize();
 	}
 
-	function initGallery(imgArray){
 
-		var galleryWidth = 0;
 
-		for( var i = 0 ; i < imgArray.length ; i++)
-		{
-			var div = $("<div>" , {
-				"class" : "imgArray"
-			}).html(imgArray[i]).appendTo(".modal-imageGallery");
+	
 
-		}	
-
-	}
+	
 
 	function resize(){
 		$("#modal").width( $("#work").width() - parseInt($(".work-box").css("margin")) *2 );
@@ -84,14 +78,12 @@ function modalClass(){
 		 	var img = $(this).find("img")[0]
 			var imgDim = UTILS.resizeWithExcessCalc( img.imgDim.w ,  img.imgDim.h , 0 , $(".modal-imageGallery").width() , $(".modal-imageGallery").height()  )
 
-			console.log(img.imgDim.w)
 			$(this).css({
 				"width" : imgDim.w,
 				"height" : imgDim.h,
 				"top" : imgDim.t,
 				"left": imgDim.l
 			})
-			 console.log(imgDim);
 		})
 		
 	}
