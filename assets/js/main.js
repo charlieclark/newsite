@@ -3,6 +3,15 @@
 var mainPath = document.URL;
 var assetPath = document.URL + "assets";
 
+//config
+var siteOffset = 0;
+var minScroll = 50;
+var menuOffset = 50;
+var squareSize = 10;
+
+var isMenuOpen = false;
+var splashAnimating = false;
+
 
 $(document).ready(function(){
 	init();
@@ -41,14 +50,15 @@ function render(){
 
 function mouseEvents(){
 
-	$("#container").mousemove(function(e){
+	$("body").mousemove(function(e){
+
 		CONFIG.mouseX = e.pageX;
 		CONFIG.mouseY = e.pageY;
 
-		if(UTILS.mouseOverObject($("#title")))
-		{
-			console.log("over");
-		}
+		// if(UTILS.mouseOverObject($("#title")))
+		// {
+		// 	console.log("over");
+		// }
 	});
 }
 
@@ -56,15 +66,16 @@ function mouseEvents(){
 
 $(window).resize(function(){
 
-		console.log("result");
 	
-		CONFIG.windowHeight = $(window).height();
-		CONFIG.windowWidth 	=$(window).width();
+		CONFIG.windowHeight = window.innerHeight;
+		CONFIG.windowWidth 	= window.innerWidth;
 
 		BASIC.resize();
 		LAYOUT.resize();
 		MODAL.resize();
 		GALLERY.resize();
+
+
 
 	
 });

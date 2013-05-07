@@ -31,6 +31,19 @@
 	<!-- css -->
 	<link rel="stylesheet" href="assets/css/reset.css"/>
 	<link rel="stylesheet" href="assets/css/main.css"/>
+
+
+	<!-- google fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,400,700,900' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic' rel='stylesheet' type='text/css'>
+
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,400' rel='stylesheet' type='text/css'>
+
+
+
+
 	
 </head>
 
@@ -42,11 +55,14 @@
 			<div id="title"> CHARLIE CLARK DESIGN </div>
 			<canvas id="canvas"></canvas>
 		</div>
-		<div id="modal"></div>
-		<div id="work" class="section">
+		<div id="main-content">
+			<div id="modal"></div>
+			<div id="work" class="section">
+		</div>
 		</div>
 
-		
+<!-- 		<div id="bottom-line" class="color1 apply-bg"></div>
+ -->		
 		
 	</div>
 
@@ -67,12 +83,30 @@
 
 	<script id="modal-template" type="text/x-handlebars-template">
 	<div id="modal-container">
-		<div id="modal-contents">
+
 			<div class="modal-title">{{title}}</div>
 			<div class="modal-subtitle">{{subtitle}}</div>
-				<div class="modal-imageGallery"></div>
-			<div class="modal-close"></div>
-		</div>
+			<div class="modal-launch-button">Open Project</div>
+
+			<div class="modal-imageGallery">
+				<div class="modal-galleryContainer"></div>
+				<div class="modal-button-container">
+					
+					<div class="galleryButton prev"></div>
+					<div class="galleryButton next"></div>
+				</div>
+			</div>
+
+			<div class="modal-image-copy-container">
+					<div class="modal-image-copy"></div>
+				</div>
+			
+				<div class="modal-close"></div>
+
+
+
+			
+
 	</div>
 		
 	</script>

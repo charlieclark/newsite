@@ -18,13 +18,13 @@ function basicClass(){
 	var isAnimating = false;
 
 	//grid 
-	var squareSize = 10;
+	
 	var numColumns , numRows;
 
 	var offsetMax = 5;
 	var curOffset= null;
 
-	var colorArray = [ "#109878" , "#110989" , "#FF9988" , "#000000" , "#FFFFFF" , "#56ea98" ]
+	var colorArray = [ "#109878" , "#110989" , "#FF9988" , "#000000" , "#56ea98" ]
 
 	var hex1 = "#000000";
 	var hex2 = "#FF0000";
@@ -38,7 +38,7 @@ function basicClass(){
 	var colorTickerMax = 10000;
 
 	// debugging
-	var debugPause = true;
+	var debugPause = false;
 
 	//dom refs
 	var titleRef = null;
@@ -70,6 +70,27 @@ function basicClass(){
 			offsetMax = 0;
 		});
 
+		$("#splash").mouseenter(function(){
+			if(isMenuOpen)
+			{
+				self.startAnimating();
+			}
+		});
+
+		$("#splash").mouseleave(function(){
+			if(isMenuOpen)
+			{
+				self.stopAnimating();
+			}
+		});
+
+		$("#splash").click(function(){
+			if(isMenuOpen)
+			{
+				LAYOUT.triggerMenu(false);
+			}
+		})
+
 		// generateGrid();
 
 		if(!debugPause)
@@ -86,7 +107,8 @@ function basicClass(){
 		{
 			isAnimating = true;
 		}
-			
+		
+		
 
 	}
 
@@ -94,13 +116,15 @@ function basicClass(){
 		if(isAnimating)
 			isAnimating = false;
 
+
+
 	}
 
 	self.animate = function(){
 		if(isAnimating)
 		{
 			
-			calculate();
+			
 			render();
 
 		}
@@ -110,7 +134,41 @@ function basicClass(){
 		resize();
 	}
 
-	
+	self.menuCenter = function(){
+		centerRender();
+	}
+
+
+	function updateColors(){
+		var titleColor = "rgb(" + color2Obj.r +"," + color2Obj.g + "," + color2Obj.b + ")";
+
+		titleRef[0].style["color"] = titleColor ;
+		titleRef[0].style["border-color"] = titleColor
+
+		$("#splash")[0].style["background-color"] =  titleColor;
+		$(".modal-title").css("color" , titleColor);
+
+		$(".apply-bg").each(function(){
+
+			var attr = "background-color";
+			applyColor($(this) , attr);
+
+		})
+
+		function applyColor(el , attr){
+			if(el.hasClass("color1"))
+			{
+				el[0].style[attr] = titleColor;
+			}
+		}
+	}
+
+	function centerRender(){
+		console.log("geting here")
+		CONFIG.mouseY = 0;
+		CONFIG.mouseX = CONFIG.windowWidth / 2;
+		render();
+	}
 
 	function calculate(){
 
@@ -123,6 +181,7 @@ function basicClass(){
 	}
 
 	function render(){
+		calculate();
 		generateGrid();
 	}
 
@@ -132,7 +191,8 @@ function basicClass(){
 		// initColors
 		color1Obj = getColor(hex1);
 		color2Obj = getColor(hex2);
-		
+
+
 	}
 	
 	function getColor(hex)
@@ -197,27 +257,30 @@ function basicClass(){
 	}
 
 	function buildCanvas(){
-		var c = canvasRef = canvasEl[0];
-		var ctx = ctxRef = c.getContext("2d");
+		canvasRef = canvasEl[0];
+		ctxRef = canvasRef.getContext("2d");
 	}
 
 	function generateGrid(){
 
 
-		var titleColor = "rgb(" + color2Obj.r +"," + color2Obj.g + "," + color2Obj.b + ")"
-		titleRef[0].style["color"] = titleColor ;
-		titleRef[0].style["border-color"] = titleColor
+		updateColors();
 
 		var c = canvasRef; 
 		var ctx = ctxRef;
 
 		//clearing canvas
+
+		canvasRef.width = ctxRef.width = wWidth;
+		canvasRef.height = ctxRef.height =  wHeight;
+
 		ctx.clearRect(0 , 0 , ctx.width , ctx.height );
+
 
 		
 
 		var maxDist = dist(numColumns , numRows);
-		var newDist = maxDist /2 ;
+		var newDist = maxDist / 2 ;
 		var mDistX = Math.abs( CONFIG.mouseX - wWidth/2);
 		var mDistY = Math.abs( CONFIG.mouseY - wHeight/2);
 		var offsetRatio = Math.max( 0.1 , (dist(mDistX , mDistY) / (maxDist/2)) / 10);
@@ -312,22 +375,33 @@ function basicClass(){
 
 	function resize(){
 
+		if(!isMenuOpen){
+			$("#splash").css("height" , CONFIG.windowHeight + menuOffset);
+		}
+		else{
+			centerRender();
+		}
 
+
+
+		var offset = siteOffset;
 		
-		wWidth = CONFIG.windowWidth;
-		wHeight = CONFIG.windowHeight;
+		wWidth = CONFIG.windowWidth - (offset * 2);
+		wHeight = CONFIG.windowHeight - (offset * 2);
+
+		if(debugPause)
+		{
+			canvasRef.width = wWidth;
+			canvasRef.height = wHeight;
+		}
 
 		numColumns = Math.ceil( wWidth / squareSize);
 		numRows = Math.ceil( wHeight / squareSize);
 
-
-		ctxRef.canvas.height = CONFIG.windowHeight;
-		ctxRef.canvas.width = CONFIG.windowWidth;
-
-		// $("#splash").css({
-		// 	"width" : wWidth,
-		// 	"height" : wHeight
-		// })
+		$("#canvas").css({
+			"top" : CONFIG.windowHeight / 2 -wHeight/2,
+			"left" : CONFIG.windowWidth / 2 -wWidth/2,
+		})
 
 		
 

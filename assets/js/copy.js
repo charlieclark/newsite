@@ -4,10 +4,10 @@ var copyData ={
 		"project0":
 		{
 			title : "test title",
-			subtitle : "test subtitle",
+			subtitle : "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
 			imgCopy:
 			[
-				{ "thumb0" : "bla bla bla bla" }
+				{ "frame0" : "bla bla bla bla" }
 			]
 		}
 	}

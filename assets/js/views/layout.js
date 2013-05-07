@@ -23,10 +23,20 @@ function layoutClass(){
 		var boxArray = [];
 		var workBoxesLoaded = 0;
 
+		
+		
+		var hasGoneLower = false;
+
 
 
 
 		self.init = function(){
+
+
+			window.addEventListener('DOMMouseScroll', handleScroll, false);
+			window.onmousewheel = document.onmousewheel = handleScroll;
+
+			$("body").addClass("splashMode")
 
 			//pre init
 			// numBoxes = PRELOAD.getSectionLength("global");
@@ -35,6 +45,28 @@ function layoutClass(){
 			
 			addEventListeners();
 
+			//scroll listener
+
+			window.scrollTo(0,0);
+
+			$(window).scroll(function(){
+				// if($(this).css("scrollTop"))
+
+				if( $(this).scrollTop() > minScroll )
+				{
+					hasGoneLower = true;
+				}
+				else
+				{
+					if(hasGoneLower)
+					{
+						// triggerMenu(false);
+						hasGoneLower = false;
+					}
+					
+				}
+			})
+
 			
 
 
@@ -42,6 +74,10 @@ function layoutClass(){
 
 		self.resize = function(){
 			resize();
+		}
+
+		self.triggerMenu = function(truth){
+			triggerMenu(truth)
 		}
 
 
@@ -136,13 +172,94 @@ function layoutClass(){
 			})
 		}
 
+		function handleScroll(evt){
+
+			
+
+			if(!isMenuOpen)
+			{
+				evt.preventDefault();
+				triggerMenu(true);
+			}
+
+		}
+
+		function triggerMenu(truth){
+			if(truth == isMenuOpen || splashAnimating)
+			{
+				return;
+			}
+			
+			console.log("Getting called")
+
+			if(truth)
+			{
+				splashAnimating = true;
+				BASIC.stopAnimating();
+
+				$("#title").fadeOut();
+
+				$("#splash").animate({
+					"height" : menuOffset
+				} , 1000 , function(){
+					$("#work").fadeIn();
+					isMenuOpen = true;
+					splashAnimating = false;
+					BASIC.menuCenter();
+				})
+
+				// setTimeout(function(){
+
+				// 	$("#splash").animate({
+					
+				
+				// } , 2000 , function(){
+
+				// function(){
+				// 		$("#work").fadeIn();
+				// 		splashAnimating = false;
+				// 	})
+	
+
+			
+
+
+				// } , 200)
+
+				
+			}
+			else
+			{
+				splashAnimating = true;
+				$("#work").fadeOut("fast" , function(){
+					$("#splash").animate({
+					"height" : CONFIG.windowHeight
+				} , 1000 , function(){
+					BASIC.startAnimating();
+					$("#title").fadeIn();
+					splashAnimating = false;
+					isMenuOpen = false;
+				});
+
+
+				});
+
+
+				
+			}
+		}
+
 
 
 		function resize(){
 
 			//general resize
 
-			curWidth = CONFIG.windowWidth * 0.9;
+			$("#main-content").css("height" , CONFIG.windowHeight - menuOffset);
+
+			
+
+			curWidth = CONFIG.windowWidth - (siteOffset * 2) + boxMargin *2;
 
 			if( curWidth > maxWidth)
 			{
@@ -205,8 +322,9 @@ function layoutClass(){
 
 			$("#work").css({
 				"width" : newBoxWidth * numColumns ,
-				"height" : newBoxHeight * numRows	
+				"height" : newBoxHeight * numRows 	
 			});
+
 
 			//individual resize ong boxes
 
